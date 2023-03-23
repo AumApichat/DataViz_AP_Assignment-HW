@@ -1,0 +1,68 @@
+---
+title: "DataViz_Assignment2_Apichat"
+author: "Apichat Photi-A"
+date: "18/03/2023"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Data Visualization
+_**Assignment 2: Good and Bad Data Visualization**_
+
+Requirements:
+- Data visualizations are important tools for communication and convincing; we need to be able to evaluate the ways that data are presented in visual form to be critical consumers of information
+- To test your evaluation skills, locate two public data visualizations online, one good and one bad
+  You can find data visualizations at https://public.tableau.com/app/discover or https://datavizproject.com/, or anywhere else you like!
+- For each visualization (good and bad):
+  Explain (with reference to material covered up to date, along with readings and other scholarly sources, as needed) why you classified that visualization the way you did.
+  How could this data visualization have been improved?
+- Word count should not exceed (as a maximum) 500 words for each visualization (i.e. 300 words for your good example and 500 for your bad example)
+
+Why am I doing this assignment?:
+1. This ongoing assignment ensures active participation throughout this class, and assesses learning outcomes 2, and 3:
+2. **Build an understanding of general design principles** for creating accessible/equitable data visualizations in R and other software
+3. **Build an understanding of data visualization as purposeful/telling a story** (and the ethical/professional implications thereof)
+
+_**The first data visualization**_
+
+[Criticize#1](https://public.tableau.com/app/profile/sanjeev.sahu4047/viz/MARVELCOMICCHARACTERS/Dashboard1)
+
+![Dashboard#1](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/Assignment1/Dashboard 1.png)
+
+Dashboard data visualizations are designed to present complex data in a simplified and visually appealing format. While the aesthetic appeal of a dashboard is important, it is equally essential to ensure that the data visualization effectively communicates its intended message. In this regard, it is important to evaluate the dashboard's design and functionality to ensure that it meets its objectives.
+
+**The Marvel-themed dashboard** presented in this scenario is visually striking and appealing, with colors and design elements that represent various Marvel characters. However, the dashboard's effectiveness in communicating its intended message may be limited due to several factors. My first impression is that it resembles a combination of Ironman and Captain America's shield.
+
+One major issue with the dashboard is **overcrowding**. While the dashboard only presents information about the gender of Marvel characters, it still appears cluttered. The dashboard's design could benefit from more whitespace to make it easier for users to process the information presented.
+
+Another problem with the dashboard is **labeling**. Labels are essential to data visualization as they help users to identify and understand the data presented. In the Marvel dashboard, **labels for null, gender-fluid, and no gender may not be easily understood**, especially by users who are not familiar with these terms. Moreover, the dashboard's categorization of gender may be too simplistic and limited. For example, it does not account for gender non-conforming or non-binary characters, which may be important for users seeking a more nuanced understanding of gender representation in the Marvel universe.
+
+**Inflexibility** is another issue with the dashboard. A good dashboard should be flexible enough to accommodate different user needs. In this case, the dashboard is limited to providing information about gender representation in the Marvel universe. While this is useful information, it may not be sufficient for users seeking a more comprehensive analysis of Marvel characters or their representation.
+
+Finally, **the dashboard's perceptual design is commendable**. It is visually striking and effectively captures the essence of the Marvel brand. However, it may be limiting in terms of data visualization. The Marvel dashboard could benefit from more data visualization techniques to provide a more comprehensive and nuanced understanding of the data presented.
+
+In conclusion, the Marvel-themed dashboard presented in this scenario is visually appealing but has several limitations in terms of its effectiveness as a data visualization tool. While the dashboard's aesthetic design is commendable, its labeling and categorization may be too simplistic and limiting, and its inflexibility may not meet the needs of all users. To make the dashboard more effective, it should be designed with more whitespace, provide clearer labels, include more nuanced categorization, and be flexible enough to accommodate different user needs. **Overall, a dashboard must strike a balance between aesthetics and functionality to ensure that it effectively communicates its intended message.**
+
+_**The second data visualization**_
+
+[Criticize#1](https://public.tableau.com/app/profile/covid.19.data.resource.hub/viz/COVID-19Cases_15840488375320/COVID-19GlobalView)
+
+![Dashboard#1](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/Assignment1/Dashboard 2_COVID-19.png)
+
+**The COVID-19 dashboard** from tableau website is a comprehensive and user-friendly resource that provides the latest information on the COVID-19 pandemic. One of the main strengths of this dashboard is its wealth of information. It offers a vast amount of data from around the world, presented in visually appealing and interactive charts, histograms, bar graphs, and bubble maps that allow users to explore the data in detail. The dashboard is updated regularly **(the latest update is on March 13th, 2023)**, providing users with the latest information on the pandemic, and making it a valuable resource for researchers, policymakers, and the general public.
+
+The dashboard is also **easily accessible**. It is available online and can be accessed from any device with an internet connection, which makes it easy for users to access the data they need, regardless of where they are or what device they are using. This feature is particularly beneficial for researchers who need to access the data on the go or work remotely. Another strength of the COVID-19 Dashboard is that it provides **a global view of the pandemic**. Users can view data from different countries, regions, and continents, making it easier to identify patterns and trends. The dashboard provides valuable insights into how the pandemic is progressing globally, which is critical for policymakers and public health officials who need to make informed decisions.
+
+Moreover, the dashboard is **easy to navigate**. It provides a clear overview of the data, allowing users to quickly find the information they need. The dashboard is also designed to be **user-friendly**, with **interactive features** that make it easy to explore and analyze the data. 
+
+While the COVID-19 Dashboard has some weaknesses, they are not significant enough to overshadow its strengths. One of the main weaknesses is the **lack of contextual information** provided alongside the data. The dashboard shows an increase in cases in a particular region, but it may not explain why this increase has occurred or what measures are being taken to address it. Nevertheless, this limitation does not significantly impact the dashboard's overall value as a resource. The information about the vaccination should be added. Another issue is the colour of the bubble map, it might be easier if the dashboard uses a different colour to show the severity of the area. 
+
+In conclusion, this COVID-19 dashboard is a valuable resource that provides up-to-date information on the COVID-19 pandemic. Its strengths, including its comprehensiveness, accessibility, global view, and user-friendly design, make it an essential tool for researchers, policymakers, and the general public. While it has some weaknesses, they are minor and do not significantly impact the dashboard's overall value. Overall, the COVID-19 dashboard is an excellent resource for tracking the pandemic and understanding its global impact and a good example for data visualization.
+
+**Apichat Photi-A**
