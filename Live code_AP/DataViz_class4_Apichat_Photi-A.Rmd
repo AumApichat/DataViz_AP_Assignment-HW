@@ -1,0 +1,199 @@
+---
+title: "Class4_20231020_DataVisualization_Apichat"
+author: "Apichat Photi-A"
+date: "2023-03-20"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+#attach the libraries
+library(socviz)
+library(ggplot2)
+library(tidyverse)
+library(ggrepel)
+#install.packages("gapminder")
+library(gapminder)
+
+#attach the data
+gapminder
+asasec
+head(asasec)
+```
+
+```{r}
+#summarize the data
+by_country <- organdata |> 
+  group_by(consent_law, country) |> 
+  summarize_if(is.numeric, funs(mean, sd), na.rm = TRUE) |> 
+  ungroup()
+```
+
+```{r}
+#try using subset
+p <- ggplot(data = by_country,
+       mapping = aes(x = gdp_mean,y = health_mean))
+p + geom_point() + 
+  geom_text_repel(data = subset(by_country, gdp_mean > 25000), 
+                  mapping = aes(label = country))
+```
+```{r}
+#annotate with text
+p <- ggplot(data = organdata, mapping = aes(x = roads, y = donors))
+
+p + geom_point() + 
+  annotate(geom = "rect", xmin = 85, xmax = 135, ymin = 30, ymax = 35, 
+           fill = "red", alpha = 0.2) + 
+
+  annotate(geom = "text", x = 91, y = 33, 
+           label = "A surprisingly high \n recovery rate",
+           hjust = 0)
+```
+
+```{r}
+#attach the data
+library(socviz)
+asasec #dataset from socviz library
+head(asasec)
+```
+Create the scatterplot and smoothed graph comparing membership and revenues for the year 2014 (hints subset)
+```{r}
+#summarize the data
+by_year <- asasec |> 
+  group_by(Members, Year) |> 
+  summarize_if(is.numeric, funs(mean, sd), na.rm = TRUE) |> 
+  ungroup()
+```
+```{r}
+#try by myself
+p <- ggplot(data = by_year,
+       mapping = aes(x = Year,y = Revenues_mean))
+p + geom_point(mapping = aes(color = Journal) + geom_smooth(method = "lm") + 
+  geom_text_repel(data = subset(by_year, Year == 2014), 
+                  mapping = aes(label = Year)))
+```
+```{r}
+#Answer
+p <- ggplot(data = subset(asasec, Year ==2014),
+                          mapping =aes(x = Members, y = Revenues))
+p + geom_point() + geom_smooth()
+
+
+```
+```{r}
+p + geom_point(mapping = aes(color = Journal)) + geom_smooth(method = "lm")
+```
+
+```{r}
+
+p0 <- ggplot(data = subset(asasec, Year ==2014), mapping =aes(x = Members, y = Revenues, label = Sname))
+
+p1 <- p0 + geom_smooth(method = "lm", se = FALSE, color = "gray80") + geom_point(mapping = aes(color = Journal)) 
+
+p2 <- p1 + geom_text_repel(data = subset(asasec, Year == 2014 & Revenues > 7000), size = 2)
+
+p2
+
+p3 <- p2 + labs(x = "Membership",
+                y = "Revenues",
+                color = "Section has its own Journal", 
+                title = "ASA Sections",
+                subtitle = "2014 Calendar year", 
+                caption = "Source: ASA annual report.")
+
+p3
+
+p4 <- p3 + scale_y_continuous(labels = scales::dollar) + theme(legend.position = "top")
+p4
+```
+
+#RcolorBrewer
+```{r}
+library(RColorBrewer)
+par(mar=c(3,4,2,2))
+display.brewer.all()
+```
+
+```{r}
+p <- ggplot(data = organdata, mapping = aes(x = roads, y = donors, color = world))
+
+p + geom_point(size = 2) + 
+  scale_color_brewer(palette = "Set2") + 
+  theme(legend.position = "top")
+```
+
+Manually choosing the colors 
+```{r}
+scale_color_manual()
+```
+
+References
+https://paletton.com/#uid=3030u0kllllaFw0g0qFqFg0w0aF
+http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+
+```{r}
+cb_palette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+p4 + scale_color_manual(values = cb_palette)
+```
+
+```{r}
+party_colors <- c("#2E74C0", "#CB454A")
+county_data 
+head(county_data)
+
+#try playing with the colors
+p0 <- ggplot(data = subset(county_data, flipped == "No"), mapping = aes(x = pop, y = black/100))
+
+p1 <- p0 + geom_point(alpha = 0.15, color = "gray50") +
+scale_x_log10(labels=scales::comma)
+
+p1
+```
+```{r}
+p2 <- p1 + geom_point(data = subset(county_data, flipped ==
+"Yes"), mapping = aes(x = pop, y = black/100, color =
+partywinner16)) +
+scale_color_manual(values = party_colors)
+p2
+```
+
+```{r}
+p3 <- p2 + scale_y_continuous(labels=scales::percent) +
+labs(color = "County flipped to ... ",
+     x = "County Population (log scale)",
+     y = "Percent Black Population",
+     title = "Flipped counties, 2016", 
+     caption = "Counties in gray did not flip.")
+
+p3
+```
+
+```{r}
+p4 <- p3 + geom_text_repel(data = subset(county_data, flipped == "Yes" & black > 25), 
+                           mapping = aes(x = pop, y = black/100, label = state), size = 2)
+p4 + theme_minimal() + theme(legend.position="top")
+
+```
+
+```{r}
+#install.packages("ggthemes")
+library(ggthemes)
+theme_set(theme_economist())
+p4
+```
+
+```{r}
+#reset the theme
+theme_set(theme_minimal())
+p4
+```
+
+
+
+
+
