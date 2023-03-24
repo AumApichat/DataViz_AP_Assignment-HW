@@ -1,4 +1,6 @@
-# Welcome to my GitHub repository for my assignment submission! In this repository, you will find all the necessary files and resources related to my assignment, including code, documentation, and any additional materials required from the class.
+# Welcome to my GitHub repository for my assignment submission! 
+
+In this repository, you will find all the necessary files and resources related to my assignment, including code, documentation, and any additional materials required from the class.
 
 For this assignment, I have followed the instructions and guidelines provided from the main branch to complete the task to the best of my ability. For the live code session, I have also tested my code thoroughly to ensure that it is functional and error-free (however, some codes can't knit in pdf form, LOL).
 
