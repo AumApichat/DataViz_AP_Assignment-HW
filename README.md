@@ -1,6 +1,10 @@
-# DataViz_AP_Assignment
-This is the repository of APICHAT's assignment and homework for DataViz module.
+# Welcome to my GitHub repository for my assignment submission! In this repository, you will find all the necessary files and resources related to my assignment, including code, documentation, and any additional materials required from the class.
 
+For this assignment, I have followed the instructions and guidelines provided from the main branch to complete the task to the best of my ability. For the live code session, I have also tested my code thoroughly to ensure that it is functional and error-free (however, some codes can't knit in pdf form, LOL).
+
+In this repository, you will find a detailed README file that provides an overview of the assignment. You will also find the source code files, any necessary data files, and a detailed documentation file that explains my thought process and methodology used to complete the assignment.
+
+Thank you for taking the time to review my submission. I hope you find it comprehensive and well-documented. I'm open for your valuable feedback. Please feel free to reach out to me if you have any questions or need further clarification on any aspect of my submission.
 
 # The assignment
 1- Submit the code from the live class
