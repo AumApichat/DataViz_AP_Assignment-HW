@@ -1,0 +1,65 @@
+---
+title: "Assignment3"
+author: "Apichat Photi-A"
+date: "2023-03-26"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Data Visualization
+Assignment 3: Data Visualization Ethics
+
+***Requirements:***
+- Let’s return to the data visualizations we evaluated for Assignment 2.
+
+**For each visualization**:
+- Explain (with reference to material covered up to date, along with readings and other scholarly sources, as needed) whether or not you think this data visualization is accessible, reproducible, and equitable.
+- How could this data visualization have been improved (in terms of accessibility, reproducibility, equity)?
+
+Word count should not exceed (as a maximum) 300 words for each visualization.
+
+**Why am I doing this assignment?:**
+1. This ongoing assignment ensures active participation throughout the class, and assesses learning outcomes 2, and 3:
+2. Build an understanding of general design principles for creating accessible/equitable data visualizations in R and other software
+3. Build an understanding of data visualization as purposeful/telling a story (and the ethical/professional implications thereof)
+
+
+_**The first data visualization**_
+
+[Criticize#1](https://public.tableau.com/app/profile/sanjeev.sahu4047/viz/MARVELCOMICCHARACTERS/Dashboard1)
+
+![Dashboard#1](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/Assignment1/Dashboard 1.png)
+
+The Marvel dashboard has raised concerns over its accessibility, reproducibility, and equity. Although it provides some text descriptions for images, **the color contrast** could be improved to cater to users with visual impairments. Moreover, the dashboard's use of color is not consistent and lacks a clear meaning, making it challenging for some users to understand the presented data (their color theme made me thinking of the Ironman). The dashboard needs to take into consideration the needs of users with **protanopia, deuteranopia, and tritanopia**.
+
+**The reproducibility of the dashboard** is also unclear as the sources of the data used and the analysis methods are not provided. To increase the dashboard's reliability, they should provide high-quality references of the data sources and analytical methods to allow for independent verification and reproduction.
+
+Furthermore, **the dashboard's equity** is also questionable as it only primarily focuses on male characters and does not include information about diversity and representation. This limitation is disappointing as it neglects the importance of diversity and inclusion in data and visualization design. To address this issue, the dashboard could benefit from including more female characters, characters from diverse backgrounds, and improved representation of marginalized groups. The inclusion of such elements would promote equity and social justice, and allow for a more inclusive user experience.
+
+In conclusion, the Marvel dashboard needs to make some improvements to enhance accessibility, reproducibility, and equity. These changes include improved color contrast, transparent data sources, analysis methods, and the inclusion of diverse representation in data and visualization design. By implementing these changes, the Marvel dashboard can become a more effective tool for data visualization, promoting inclusivity, equity, and social justice.
+
+[Criticize#2](https://public.tableau.com/app/profile/covid.19.data.resource.hub/viz/COVID-19Cases_15840488375320/COVID-19GlobalView)
+
+![Dashboard#2](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/Assignment1/Dashboard 2_COVID-19.png)
+
+The COVID-19 dashboard from https://public.tableau.com/app/profile/covid.19.data.resource.hub/viz/COVID-19Cases_15840488375320/COVID-19GlobalView provides crucial information about the global impact of the pandemic. However, there are several issues that need to be addressed to ensure that the dashboard is accessible, reproducible, and equitable.
+
+Firstly, **the dashboard's accessibility** could be improved. Currently, the dashboard lacks options for users with visual or hearing impairments, and the color scheme may pose challenges for color-blind individuals. To address this issue, the dashboard could include accessible data tables or pictograms to present data to users who cannot access or interpret charts or graphs.
+
+Secondly, **the reproducibility of the dashboard** is limited. The data sources and methods are not transparently presented, making it difficult for users to verify or reproduce the results presented in the dashboard. Providing more detailed information on data sources and methods would increase the reproducibility and reliability of the dashboard. Additionally, it would be helpful to offer users the ability to download the raw data, along with high-quality references, allowing for more detailed analysis and interpretation.
+
+Finally, **the dashboard's equity** could be improved by providing more localized information on the pandemic's impact. While the dashboard presents global data, it does not provide information on how the pandemic is affecting specific regions or communities. Providing more localized information would enable policymakers to better understand and address the needs of affected communities, including data on the impact of the pandemic on vulnerable populations such as the elderly, low-income communities, and racial and ethnic minorities.
+
+To ensure that the COVID-19 dashboard is accessible, reproducible, and equitable, several improvements could be made. These include adding options for users with visual or hearing impairments, providing more detailed information on data sources and methods, allowing users to download raw data and offering high-quality references, and providing more localized information on the pandemic's impact. By addressing these issues, the dashboard can become a more effective tool for policymakers, researchers, and the general public in understanding and responding to the ongoing pandemic.
+
+**References:** 
+
+- Kieran Healy, Data Visualization: a practical introduction, Princeton University Press, 2019, P.10-20
+
+- https://www.verywellhealth.com/what-do-color-blind-people-see-5092522
+
+- powerpoint from the 5th class: DSI_DataViz_5_AccessibleDataVisualization.pdf
