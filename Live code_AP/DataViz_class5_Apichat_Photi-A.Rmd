@@ -1,0 +1,78 @@
+---
+title: "Class5_20230323_DataVisualization_Apichat"
+author: "Apichat Photi-A"
+date: "2023-03-23"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Reference: https://podio.com/site/creative-routines
+
+![Flattening the curve](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/07-visualization-main/Class5_picture1_Flattening the curve.png)
+
+How do we incorporate these accessibility goals into our data viz practices> 
+
+##Colour
+Check the color blindness ref: https://www.color-blindness.com/coblis-color-blindness-simulator/
+
+```{r}
+#install.packages("viridis")
+library(viridis)
+```
+
+##Text
+- Labels and legends
+- Fonts and typefaces 
+
+![Descriptive content](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/07-visualization-main/Class5_picture2_Descriptive content.png)
+
+Reference: https://podio.com/site/creative-routines
+
+
+![Activity](/Users/apichatphoti-a/Desktop/Data Science Course/5_Data visualization/07-visualization-main/Class5_picture3_Activity.png)
+
+**Level 1** 
+_**Focus on chart elements such as chart type, title, axis ranges, labels, colours**_
+
+- The chart shows the daily routine of the famous people classify by SLEEP, CREATIVE, WORK, DAY JOB/ADMIN, FOOD/LEISURE, EXERCISE and OTHER.
+
+**Level 2** 
+_**Descriptive statistics (eg. mean), outliers, max and min points, correlations, comparing points**_
+
+- By choosing the filter on each color, you can compare the amount of time each artist was spending on each of these activity per day. Also, you can check what hours of the day was they preferred time for that activity.
+
+**Level 3** 
+_**Complex trends, pattern synthesis, clusters, exceptions, common concepts**_
+_**Perceptual interpretations of the data**_
+
+- There do not appear to be large trends amongst the different creative people in terms of the structure of their days. The one thing that appears common is that most of the creative people did not appear to have a day job, although 6 people, including Freud, Vonnegut and Kafka, spent considerable time in their day jobs. There was a great diversity in the pattern of time spent for creative work vs. leisure and other time.
+- For this level we can go to details of daily activity of each artist and compare it with others, such has who slept the longest or the amount of time they spend on creative work versus day job.
+
+**Level 4** 
+_**Context and domain insights, social and political context and explanations**_ 
+_**Subjective interpretations that go beyond the data**_
+
+- For this level we can go to details of daily activity of each artist and compare it with others, such has who slept the longest or the amount of time they spend on creative work versus day job.
+
+##Can people actually access our data visualizations?
+Cross-browser functionality - This is especially important in some professional contexts, where
+browser use may be limited/regulated
+Cost and accessibility - To maximize the accessibility of our data products, we can consider:
+
+**Open Access**
+(Per University of BC Libraries , “a range of practices
+through which research outputs are distributed online, free of
+cost or other access barriers”)
+
+**Creative Commons licenses**
+(standard and simple licenses to
+facilitate sharing and reuse of work)
+
+Reference: https://a11y.canada.ca/en/guides/
+Reference: Accessibility: https://www.rgd.ca/database/files/library/RGD_AccessAbility2_Handbook_2021_09_28.pdf
+Reference for citation: https://www.mybib.com/tools/apa-citation-generator

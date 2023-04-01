@@ -1,0 +1,154 @@
+---
+title: "Class8_20230330_DataVisualization_Apichat"
+author: "Apichat Photi-A"
+date: "2023-03-30"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#load package
+library(ggplot2)
+library(ggthemes)
+library(ggrepel)
+library(tidyverse)
+library(socviz)
+```
+```{r}
+##review data
+election |> 
+  select(state, total_vote, r_points, pct_trump, party, census) |>
+  sample_n(5)
+```
+```{r}
+party_colors <- c("#2E74C0", "#CB454A")
+p0 <- ggplot(data = subset(election, st %nin% "DC"), 
+             mapping = aes(x = r_points, 
+                           y = reorder(state, r_points), color = party))
+p1 <- p0 + geom_vline(xintercept = 0, color = "gray30") + geom_point(size = 2)
+p2 <- p1 + scale_color_manual(values = party_colors)
+p3 <- p2 + scale_x_continuous(breaks = c( -30, -20, -10, 0, 10, 20, 30, 40), 
+                              labels = c("30\n (Clinton)", "20", "10", "0", "10", "20", "30", "40\n(Trump)"))
+p3 + facet_wrap(~ census, 
+                ncol=1, scales="free_y") +
+  guides(color=FALSE) + labs(x = "Point Margin", y = "") +
+  theme(axis.text=element_text(size=8))
+```
+install and preview maps
+```{r}
+#install.packages("maps")
+library(maps)
+us_states <- map_data("state")
+head(us_states)
+```
+```{r}
+#Create a black and white map
+p <- ggplot(data = us_states, mapping = aes(x = long, 
+                                            y = lat, 
+                                            group = group))
+p + geom_polygon(fill = "white", color = "black")
+```
+```{r}
+#Add the colour
+p <- ggplot(data = us_states, aes(x = long, 
+                                  y = lat, 
+                                  group = group, 
+                                  fill = region))
+p + geom_polygon(color = "gray90", linewidth = 0.1) + guides(fill = FALSE)
+```
+```{r}
+library(mapproj) #require for coord_map
+#Add the colour
+p <- ggplot(data = us_states, aes(x = long, 
+                                  y = lat, 
+                                  group = group, 
+                                  fill = region))
+p + geom_polygon(color = "gray90", size = 0.1) + coord_map(projection = "albers", lat0 = 39, lat1 = 45) + 
+  guides(fill = FALSE)
+
+```
+
+Merge election and map datasets
+```{r}
+election$region <- tolower(election$state)
+us_states_elec <- left_join(us_states, election, by='region')
+head(us_states_elec)
+```
+
+plot election data on a map
+```{r}
+party_colors <- c("#2E74C0", "#CB454A")
+p0 <- ggplot(data = us_states_elec, 
+             mapping = aes(x = long, 
+                           y = lat, 
+                           group = group, 
+                           fill = party))
+p1 <- p0 + geom_polygon(color = "gray90", size = 0.1) + 
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45)
+p2 <- p1 + scale_fill_manual(values = party_colors) +
+  labs(title = "Election Results 2016", fill = NULL)
+p2 + theme_map()
+```
+#review country datasets
+```{r}
+county_map |> 
+  sample_n(5)
+county_data |> 
+  select(id, name, state, pop_dens) |> 
+  sample_n(5)
+```
+#merge datasets
+```{r}
+county_full <- left_join(county_map, county_data, by = "id")
+head(county_full)
+```
+#plotting population density
+```{r}
+p <- ggplot(data = county_full, 
+            mapping = aes(x = long, 
+                          y = lat, 
+                          fill = pop_dens, 
+                          group = group))
+p1 <- p + geom_polygon(color = "gray90", size = 0.05) + 
+  coord_equal()
+p2 <- p1 + scale_fill_brewer(palette="Blues",
+labels = c("0-10", "10-50", "50-100", "100-500", "500-1,000", "1,000-5,000", ">5,000"))
+p2 + labs(fill = "Population per nsquare mile") + 
+  theme_map() +
+  guides(fill = guide_legend(nrow = 1)) +
+  theme(legend.position = "bottom")
+```
+#the range of pop per sq mile depends on the "pop_den" range
+#if we need to change these ranges, me must reclassify before plotting the graph.
+
+#Reference: [https://app.diagrams.net/]
+
+##install
+```{r}
+#install.packages("DiagrammeR")
+library(DiagrammeR)
+
+
+#making basic flowchart
+grViz(diagram = "digraph flowchart {
+  tab1 [label = '@@1', fontname = arial, shape = plaintext, fontcolor = blue]
+  tab2 [label = '@@2', fontname = arial, shape = plaintext, fontcolor = blue] 
+  tab3 [label = '@@3', fontname = arial, shape = plaintext, fontcolor = blue]
+  tab4 [label = '@@4', fontname = arial, shape = plaintext]
+  
+  tab1 -> tab2 -> tab3 [color = red, arrowhead = vee, arrowsize = 1, penwidth = 5]; 
+  tab2 -> tab4
+}
+  
+  [1]: 'Artefact collection in field' 
+  [2]: 'Preliminary dating of artefacts (visual)'    
+  [3]: 'Artefacts sent to lab for dating'    
+  [4]: 'Artefacts put in storage'
+  ")
+```
+

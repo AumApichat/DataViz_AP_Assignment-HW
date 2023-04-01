@@ -1,0 +1,255 @@
+---
+title: "Class6_20230325_DataVisualization_Apichat"
+author: "Apichat Photi-A"
+date: "2023-03-25"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+#attach the libraries
+library(socviz)
+library(ggplot2)
+library(tidyverse)
+library(ggrepel)
+#install.packages("gapminder")
+library(gapminder)
+```
+
+```{r}
+#build the color palette
+model_colors <- RColorBrewer::brewer.pal(3, "Set1")
+model_colors
+```
+
+```{r}
+#Layering geoms - Showing a legend
+p0 <- ggplot(data = gapminder, mapping = aes(x = log(gdpPercap), y = lifeExp))
+p1 <- p0 + geom_point(alpha = 0.2) + 
+  geom_smooth(method = "lm", aes(color = "OLS", fill = "OLS")) + 
+  geom_smooth(method = "lm", formula = y ~ splines::bs(x, df = 3), aes(color = "Cubic Spline", fill = "Cubic Spline")) + 
+  geom_smooth(method = "loess", aes(color = "LOESS", fill = "LOESS"))
+p1
+
+```
+```{r}
+##make legend pretty
+#layering geoms - showing a legend
+#assigning a colour from our model_colors palette to each of our model variables
+p1 + scale_color_manual(name = "Models", values = model_colors) + scale_fill_manual(name = "Models", values = model_colors) + theme(legend.position = "top")
+```
+
+```{r}
+gapminder
+str(gapminder)
+```
+```{r}
+#create the linear model object 
+out <- lm(formula = lifeExp ~ gdpPercap + pop + continent, data = gapminder)
+out
+str(out)
+
+summary(out)
+```
+
+#predict()
+```{r}
+#make dataframe for predictions
+min_gdp <- min(gapminder$gdpPercap)
+max_gdp <- max(gapminder$gdpPercap)
+med_pop <- median(gapminder$pop)
+pred_df <- expand.grid(gdpPercap = (seq(from = min_gdp, to = max_gdp, length.out = 100)), pop = med_pop, 
+                       continent = c("Africa", "Americas", "Asia", "Europe", "Oceania")) 
+
+```
+```{r}
+dim(pred_df)
+```
+```{r}
+##make the prediction
+pred_out <- predict(object = out, newdata = pred_df, interval = "predict")
+head(pred_out)
+```
+```{r}
+#binding our dataframe
+pred_df <- cbind(pred_df, pred_out)
+head(pred_df)
+str(pred_df)
+```
+
+##As an example, we can create a visualization to explore our question “How does per capita GDP affect life expectancy in Europe and Africa?”
+```{r}
+p <- ggplot(data = subset(pred_df, continent %in% c("Europe", "Africa")), aes(x = gdpPercap, y = fit, ymin = lwr, ymax = upr, color = continent, fill = continent, group = continent))
+p + geom_point(data = subset(gapminder, continent %in% c("Europe", "Africa")), 
+               aes(x = gdpPercap, 
+                   y = lifeExp, color = continent), 
+               alpha = 0.5, inherit.aes = FALSE) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.2, color = FALSE) + #alpha will show the transparent
+  scale_x_log10(labels = scales::dollar)
+
+```
+```{r}
+p <- ggplot(data = subset(pred_df, continent %in% c("Europe", "Africa")), aes(x = gdpPercap, y = fit, ymin = lwr, ymax = upr, color = continent, fill = continent, group = continent))
+p + geom_point(data = subset(gapminder, continent %in% c("Europe", "Africa")), 
+               aes(x = gdpPercap, 
+                   y = lifeExp), #remove color = continent
+               alpha = 0.5, inherit.aes = FALSE) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.2, color = FALSE) + #alpha will show the transparent
+  scale_x_log10(labels = scales::dollar)
+
+```
+
+How does per capita GDP affect fit(life expectancy) in Asia?
+```{r}
+p_asia <- ggplot(data = subset(pred_df, continent %in% ("Asia")), aes(x = gdpPercap, y = fit, ymin = lwr, ymax = upr, color = continent, fill = continent, group = continent))
+p_asia + geom_point(data = subset(gapminder, continent %in% ("Asia")), 
+               aes(x = gdpPercap, 
+                   y = lifeExp, color = continent), 
+               alpha = 0.5, inherit.aes = FALSE) + 
+  geom_line() + 
+  geom_ribbon(alpha = 0.2, color = FALSE) + #alpha will show the transparent
+  scale_x_log10(labels = scales::dollar)
+
+
+
+```
+
+```{r}
+#install.packages("broom")
+library(broom)
+```
+
+```{r}
+out_conf <- tidy(out)
+out_conf |> round_df()
+```
+
+Component level statistics with tidy()
+Now we can create a data visualization from this dataframe, the way
+that we have been doing all along
+
+```{r}
+p <- ggplot(out_conf, mapping = aes(x = term, y = estimate))
+p + geom_point() + coord_flip()
+
+```
+
+We can use the confint() function to calculate confidence intervals for our estimates
+
+The tidy() function takes a model object and returns a dataframe
+of component level information
+- For example, with an added step to round numeric columns to two
+decimal places:
+```{r}
+out_conf <- tidy(out)
+out_conf |> round_df() # make it round number
+```
+
+plot the results
+```{r}
+p <- ggplot(out_conf, mapping = aes(x = term, y = estimate))
+p + geom_point() + coord_flip()
+```
+```{r}
+out_conf <- tidy(out, conf.int = TRUE)
+out_conf %>% round_df()
+```
+
+Refine our data
+```{r}
+out_conf <- subset(out_conf, term %nin% "(Intercept)")
+out_conf$nicelabs <- prefix_strip(out_conf$term, "continent")
+```
+
+Component level statistics with tidy()
+```{r}
+#plot our new data
+p <- ggplot(out_conf, mapping = aes(x = reorder(nicelabs, estimate), 
+                                    y = estimate, 
+                                    ymin = conf.low, 
+                                    ymax = conf.high))
+p + geom_pointrange() + 
+  coord_flip() + 
+  labs(x = "", 
+       y = "OLS Estimate")
+```
+
+Observation level statistics with augment()
+```{r}
+out_aug <- augment(out)
+head(out_aug) |> round_df()
+```
+Plot augmented data 
+```{r}
+p <- ggplot(data = out_aug, mapping = aes(x = .fitted, y =.resid))
+p + geom_point()
+```
+
+Model level statistics with glance()
+```{r}
+glance(out) |> round_df()
+```
+
+Using Broom for grouped analysis
+```{r}
+eu77 <- gapminder |> filter(continent == "Europe", year == 1977)
+fit <- lm(lifeExp ~ log(gdpPercap), data = eu77)
+summary(fit)
+```
+Nesting data - let's create a list column
+```{r}
+out_le <- gapminder |> 
+  group_by(continent, year) |>
+  nest()
+out_le
+```
+Unnest 
+```{r}
+out_le |> filter(continent == "Europe" & year == 1977) |>
+  unnest()
+```
+
+We do this by creating a function that fits our model to a dataframe, then mapping that function to each of our list column’s rows , one at a time
+```{r}
+# fit_ols <- function(df) {lm(lifeExp ~ log(gdpPercap), data = df)}
+# out_le <- gapminder |> 
+#   group_by(continent, year) |>
+#   nest() |>
+#   mutate(model = map(data, fit_ols)) %>%
+
+```
+tidy our models
+```{r}
+# library(dplyr)
+# library(purrr)
+# fit_ols <- function(df) {lm(lifeExp ~ log(gdpPercap), data = df)}
+# 
+# out_tidy <- gapminder |> 
+#   group_by(continent, year) |> 
+#   nest() |>
+#   mutate(model = map(data, fit_ols), tidied = map(model, tidy)) |>
+#   unnest(tidied) |> 
+#   filter(term %nin% "(Intercept)" & continent %nin% "Oceania")
+
+```
+Plot our model results
+```{r}
+# p <- ggplot(data = out_le, 
+#             mapping = aes(x = year, 
+#                           y = estimate, 
+#                           ymin = estimate - 2*std.error, 
+#                           ymax = estimate + 2*std.error, 
+#                           group = continent, 
+#                           color = continent))
+# p + geom_pointrange(position = position_dodge(width = 1)) +
+#   scale_x_continuous(breaks = unique(gapminder$year)) +
+#   theme(legend.position = "top") +
+#   labs(x = "Year", y = "Estimate", color = "Continent")
+```
+
