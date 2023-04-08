@@ -1,0 +1,196 @@
+---
+title: "Assignment4"
+author: "Apichat Photi-A"
+date: "2023-04-01"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Data Visualization**
+Assignment 4: Final Project
+
+**Requirements**
+We will finish this class by giving you the chance to use what you have learned in a practical context, by creating data visualizations from raw data.
+
+Choose a dataset of interest from the City of Toronto’s Open Data Portal (https://www.toronto.ca/city-government/data-research-maps/open-data/) or Ontario’s Open Data Catalogue (https://data.ontario.ca/).
+
+Using R and one other data visualization software (Excel or free alternative, Tableau Public, Python, any other tool you prefer), create two distinct visualizations from your dataset of choice.
+
+For each visualization, describe and justify with course content or scholarly sources:
+- What software did you use to create your data visualization?
+
+_**Answer**_ I use tableau public and post it at https://public.tableau.com/views/COVID-19inTorontobyP_Apichat/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link
+
+- Who is your intended audience?
+
+_**Answer**_ The audience for the COVID-19 dashboard in Tableau are individuals and organizations interested in monitoring the spread and impact of COVID-19. This could include public health officials, policymakers, healthcare professionals, researchers, and the general public.
+
+- What information or message are you trying to convey with your visualization?
+
+_**Answer**_ The dashboard created in Tableau displays information on the number of fatal and active cases, as well as monthly case counts from January 2020 to March 2023. Additionally, the dashboard includes a waffle chart that depicts the distribution of cases across different areas in Toronto. Apart from this, a graph representing the monthly case counts for Toronto has been created in RStudio.
+
+- What design principles (substantive, perceptual, aesthetic) did you consider when making your visualization? How did you apply these principles? With what elements of your plots?
+
+_**Answer**_ For **substantive design principles**, I used a line plot to represent the number of positive cases each month, and a bubble plot to represent each age group. Additionally, I used a treemap to show the reported cases from each neighborhood area in Toronto.
+
+Regarding **perceptual design principles**, I chose a color palette that is suitable for various groups of audiences, making the visualization easy to understand.
+
+For **aesthetic design principles**, I paid attention to the overall look and feel of the visualization, ensuring that it is visually appealing and cohesive. For example, I used colors that are easy to understand when creating the graphs. Additionally, I maintained consistent font sizes and colors throughout the dashboard to create a cohesive and organized layout.
+
+- How did you ensure that your data visualizations are reproducible? If the tool you used to make your data visualization is not reproducible, how will this impact your data visualization?
+
+_**Answer**_ To ensure that my code is easy to understand and reproduce, I wrote it using descriptive variable names and comments where necessary. I believe that comments are the best way to communicate with other coders and help them understand the code better. Additionally, I shared my code and data with others using **GitHub**, a cloud-based collaboration tool that makes it easy for others to reproduce my visualizations and build upon them.
+
+To ensure transparency and ease of replication, I also documented the sources of all data used in my visualizations. This includes any pre-processing steps performed on the data, so that others can understand how the data was cleaned and transformed. In my case, the data used was from **Toronto Open Data**, which is freely available to everyone. Overall, by following these best practices, I can ensure that my code is well-documented, easy to understand, and can be easily reproduced by myself or others.
+
+- How did you ensure that your data visualization is accessible?
+
+_**Answer**_ The dashboard is available in tableau public. 
+
+- Who are the individuals and communities who might be impacted by your visualization?
+
+_**Answer**_ The COVID-19 data visualization dashboard might impact a wide range of individuals and communities. Here are some groups that may be affected:
+
+**General Public** - The dashboard provides information about the number of positive cases, active cases, and fatalities related to COVID-19, which can help the general public understand the severity of the pandemic in their area.
+**Healthcare professionals** - The visualization can be used by healthcare professionals to track the spread of the virus, identify areas with high numbers of cases, and develop strategies to manage the pandemic each month.
+**Government officials** - The dashboard can be used by government officials to make informed decisions about policies and interventions to manage the pandemic.
+**Businesses** - The visualization can help businesses understand the impact of the pandemic on their operations, such as by showing areas with high numbers of cases that may be risky for business operations.
+**Vulnerable communities** - The dashboard can be used to identify areas with high numbers of cases that may be at a higher risk for COVID-19, such as communities with high rates of poverty or limited access to healthcare.
+
+- How did you choose which features of your chosen dataset to include or exclude from your visualization?
+
+_**Answer**_ When choosing features of a dataset to include or exclude in a visualization, I considered factors such as relevance, clarity, completeness and accuracy. Relevant and useful features for the visualization were selected to achieve a complete and accurate representation of the data. By taking these factors into account, I could create a clear, understandable, and informative visualization that accurately represents the data.
+
+- What ‘underwater labour’ contributed to your final data visualization product?
+
+_**Answer**_ To obtain the required dataset for the COVID-19 dashboard, collaboration was necessary between various healthcare facilities such as clinics, hospitals, and primary care units in all areas of Toronto. The dataset included information on all patients who received treatment or underwent self-treatment at home or home isolation. The data also required updating of patient outcomes from secondary to tertiary care units or hospitals in Toronto. By collaborating with healthcare facilities and ensuring accurate data collection, a comprehensive dataset was obtained for the COVID-19 dashboard.
+
+Your final submission document should include:
+- Two data visualizations
+- Written descriptions for each data visualization
+- Link to your dataset of choice
+- Complete and commented code as an appendix (for your visualization made with R, and for the other, if relevant)
+
+This assignment is intentionally open-ended - you are free to create static or dynamic data visualizations, maps, or whatever form of data visualization you think best communicates your information to your audience of choice!
+
+Total word count should not exceed (as a maximum) 1000 words
+
+**Why am I doing this assignment?**
+
+This assignment tests your ability to apply the skills and knowledge acquired throughout the class and assesses learning outcomes 1, 2, and 3:
+1. Develop ability to create and customize data visualizations start to finish in R
+2. Build an understanding of general design principles for creating accessible/equitable data visualizations in R and other software
+3. Build an understanding of data visualization as purposeful/telling a story (and the ethical/professional implications thereof)
+
+```{r}
+#install.packages("opendatatoronto")
+library(opendatatoronto)
+library(dplyr)
+library(tidyverse)
+# get package
+package <- show_package("64b54586-6180-4485-83eb-81e8fae3b8fe")
+package
+
+# get all resources for this package
+resources <- list_package_resources("64b54586-6180-4485-83eb-81e8fae3b8fe")
+
+# identify datastore resources; by default, Toronto Open Data sets datastore resource format to CSV for non-geospatial and GeoJSON for geospatial resources
+datastore_resources <- filter(resources, tolower(format) %in% c('csv', 'geojson'))
+
+# load the first datastore resource as a sample
+data <- filter(datastore_resources, row_number()==2) %>% get_resource()
+data
+```
+```{r}
+#looka at the data
+head(data)
+
+```
+```{r}
+#select potential columns
+data |> select("Age.Group", "Neighbourhood.Name", "Source.of.Infection", "Client.Gender") |> 
+  sample_n(10)
+```
+```{r}
+#install libraries
+#install.packages("maps")
+#install.packages("dplyr")
+library(maps)
+library(dplyr)
+library(ggplot2)
+glimpse(data)
+```
+
+######
+
+```{r}
+# Load required packages
+library(tidyverse)
+library(lubridate)
+library(sf)
+#install.packages("leaflet")
+library(leaflet)
+library(dplyr)
+
+# Set working directory and download data from Toronto Open Data website
+#setwd("~/Desktop")
+#download.file("https://ckan0.cf.opendata.inter.prod-toronto.ca/download_resource/15c71d2a-1d9c-41e7-b74a-15752f7c5670?format=csv", 
+#              destfile = "covid19_data.csv")
+
+# Read data and filter for Toronto cases only
+covid_data <- data
+view(covid_data)
+# Convert date to proper format
+covid_data$Reported.Date <- ymd(covid_data$`Reported.Date`)
+
+# Create new columns for day, week, and month
+covid_data <- covid_data %>%
+  mutate(Day = day(Reported.Date),
+         Year = year(Reported.Date),
+         Month = month(Reported.Date, label = TRUE))
+
+```
+
+```{r}
+#manage the data
+
+
+#create new column for month and year
+df <- data %>% 
+  mutate(Month = format(as.Date(data$`Reported.Date`), "%m"),
+         Year = format(as.Date(data$`Reported.Date`), "%Y"))
+
+#group by month
+count_by_month <- df %>% 
+  group_by(Year, Month) %>% 
+  count()
+
+count_by_month$month_year <- paste(count_by_month$Month, count_by_month$Year, sep=":")
+
+#arrange the data
+count_by_month$month_year <- factor(count_by_month$month_year, levels = count_by_month$month_year)
+
+```
+
+```{r}
+#create ggplot object
+p <- ggplot(data = count_by_month, aes(x = month_year, y = n)) +
+  geom_point() + geom_line(aes(group = "1")) +
+  labs(title = "Monthly COVID-19 Cases in Toronto",
+       x = "Month",
+       y = "Cases") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+ 
+# Display plot
+p
+
+```
+
+
+
+
