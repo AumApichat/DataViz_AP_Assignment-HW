@@ -11,9 +11,11 @@ Thank you for taking the time to review my submission. I hope you find it compre
 # The assignment
 1- Submit the code from the live class
 
-2- Submitted 
+2- Submitted for the topic named "Good and Bad Data Visualization"
 
-3- 
+3- Submitted for the topic named "Data Visualization Ethics"
+
+4- Submitted the code and in Tableau public at https://public.tableau.com/views/COVID-19inTorontobyP_Apichat/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link
 
 # Codes from live class
 Class#1 - Mar 13, 2023
