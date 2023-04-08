@@ -1,0 +1,181 @@
+---
+title: "Class9_20230401_DataVisualization_Apichat"
+author: "Apichat Photi-A"
+date: "2023-04-01"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Install the package
+```{r}
+install.packages("rAmCharts")
+library(rAmCharts)
+```
+```{r}
+head(iris)
+```
+Make a dynamic dataviz
+```{r}
+amPlot(iris, col = c("Sepal.Length", "Sepal.Width"),
+       type = c("line", "step"),
+       zoom = TRUE,
+       legend = TRUE)
+```
+
+#load package for gganimate
+```{r}
+library(ggplot2)
+library(gapminder)
+install.packages("gganimate")
+install.packages("gifski")
+library(gganimate)
+library(gifski)
+```
+```{r}
+p <- ggplot(gapminder, aes(x = gdpPercap,
+                           y = lifeExp, 
+                           size = pop, 
+                           colour = country)) + 
+  geom_point(show.legend = FALSE, alpha = 0.7) + 
+  scale_color_viridis_d() + 
+  scale_size(range = c(2, 12)) + 
+  scale_x_log10() + 
+  labs(x = "GDP per capita", 
+       y = "Life expectancy")
+p
+```
+
+Animate our plot
+```{r}
+p2 <- p + transition_time(year) +
+  labs(title = "Year: {frame_time}")
+animate(p2, duration = 10, renderer = gifski_renderer())
+```
+
+Install shiny package
+```{r}
+install.packages("shiny")
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(gapminder)
+```
+
+```{r}
+# #user interface 
+# ui <- fluidPage(
+# 
+#   #add title 
+#   titlePanel("GDP and Life Expectancy with Shiny"),
+#   
+#   sidebarLayout(
+#     sidebarPanel(
+#       selectInput("year",
+#                   "Choose year.",
+#                   choices = unique(gapminder$year))
+#       
+#     ),
+#     
+#     mainPanel(
+#       plotOutput("distPlot")
+#     )
+#     
+#   )
+#   
+# )
+# #server
+# server <- function(input,output){
+#   
+#   output$disPlot <- renderPlot({
+#       #modify data based on input$year from ure UI
+#       plotdata <- gapminder |> 
+#         filter(year == input$year)
+#       p <- ggplot(plotdata, aes(x = gdpPercap,
+#                                 y = lifeExp,
+#                                 size = pop,
+#                                 colour = country)) + 
+#         geom_point(show.legend = FALSE, alpha = 0.7) + 
+#         scale_color_viridis_d() + 
+#         scale_size(range = c(2,12)) + 
+#         scale_x_log10() + 
+#         labs(x = "GDP per capita", 
+#              y = "Life expectancy")
+#       p
+#   })
+# }
+# 
+# #run the app
+# shinyApp(ui = ui, server = server)
+```
+
+**Shiny code from Ciara**
+```{r}
+#Shiny code from Ciara
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+library(ggplot2)
+library(dplyr)
+library(gapminder)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("GDP and Life Expectancy with Shiny"),
+    
+    
+    # Sidebar with a slider input for number of bins 
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("year",
+                        "Choose year:",
+                        choices = unique(gapminder$year))
+        ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("distPlot")
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    output$distPlot <- renderPlot({
+        # modify graph based on input$year from ui.R
+      plotdata <- gapminder |>
+        filter(year == input$year)
+      
+        p <- ggplot(plotdata, aes(x = gdpPercap,
+                                  y=lifeExp, 
+                                  size = pop, 
+                                  colour = country)) +
+          geom_point(show.legend = FALSE, alpha = 0.7) +
+          scale_color_viridis_d() +
+          scale_size(range = c(2, 12)) +
+          scale_x_log10() +
+          labs(x = "GDP per capita",
+               y = "Life expectancy")
+        p
+    })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+
+
+```
+
